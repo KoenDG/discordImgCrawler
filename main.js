@@ -2,12 +2,15 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
 import config from 'config';
-import downloadImage from './download.js';
+import fs from 'fs-extra';
 
-const headless_mode = process.argv[2];
+import downloadImage from './download.js';
 
 let target = 0;
 let downloaded = 0;
+
+const downloadDir = path.resolve('./spider/');
+await fs.ensureDir(downloadDir);
 
 const requestPage = async (req) => {
 	const url = req.url();
@@ -15,7 +18,7 @@ const requestPage = async (req) => {
 	if (url.startsWith('https://media.discordapp.net/attachments/') && req.resourceType() === 'image') {
 		const imageUrl = url.split(/\?format=|\?width=/gu)[0];
 		const imageName = path.win32.basename(imageUrl);
-		const destPath = `./spider/${imageName}`;
+		const destPath = `${downloadDir}/${imageName}`;
 		target += 1;
 
 		console.log(`Image downloading: ${imageUrl}`);
@@ -44,7 +47,7 @@ const evaluatePage = async (page) => {
 
 const main = async () => {
 	const browser = await puppeteer.launch({
-		headless: headless_mode !== 'true',
+		headless: false,
 		defaultViewport: null,
 		ignoreHTTPSErrors: true,
 		slowMo: 0,
@@ -57,6 +60,8 @@ const main = async () => {
 	await page.goto(`https://discord.com/channels/${config.get('serverID')}/${config.get('channelID')}/0`, {
 		waitUntil: 'networkidle0',
 	});
+
+	console.log('Login success loaded');
 
 	page.on('request', (req) => {
 		requestPage(req);
