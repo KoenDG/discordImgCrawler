@@ -3,18 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"eslint": "eslint . --ignore-pattern 'dist/' --ignore-pattern 'node_modules/' --ignore-pattern 'test/'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^13.4.0",
-    "request": "^2.88.2",
-    "request-progress": "^3.0.0"
+		"cli-progress": "^3.12.0",
+		"config": "^4.1.0",
+		"fs-extra": "^11.3.0",
+		"got": "^14.4.7",
+		"puppeteer": "^24.15.0"
   },
   "devDependencies": {
-    "pkg": "^5.5.2"
+		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/js": "^9.32.0",
+		"eslint": "^9.32.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.3",
+		"prettier": "^3.6.2",
+		"prettier-eslint": "^16.4.2"
   }
 }

@@ -1,2 +1,3 @@
 node_modules/
 spider/.DS_Store
+config/my_config.json
